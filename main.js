@@ -1,3 +1,5 @@
+import { students } from "./data.js";
+
 // Поиск статичных элементов по id с помощью getElementById
 // Статичные элементы можно искать и другими методами: querySelector, querySelectorAll
 const buttonElement = document.getElementById("add-button");
@@ -5,13 +7,13 @@ const listElement = document.getElementById("list");
 const nameInputElement = document.getElementById("name-input");
 const colorInputElement = document.getElementById("color-input");
 
-// Данные о студентах в JS-коде
-const students = [
-  {
-    name: "Глеб",
-    color: "#ff2600",
-  },
-];
+// // Данные о студентах в JS-коде
+// const students = [
+//   {
+//     name: "Глеб",
+//     color: "#ff2600",
+//   },
+// ];
 
 // Рендер-функция
 const renderStudents = () => {

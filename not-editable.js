@@ -1,11 +1,7 @@
+import { students } from "./data.js";
+
 const listElement = document.getElementById("list");
 
-const students = [
-  {
-    name: "Глеб",
-    color: "#ff2600",
-  },
-];
 
 const renderStudents = () => {
   const studentsHtml = students
