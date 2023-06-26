@@ -15,24 +15,43 @@ const colorInputElement = document.getElementById("color-input");
 //   },
 // ];
 
-// Рендер-функция
-const renderStudents = () => {
-  // Преобразование данных в HTML-разметку с помощью map и join
-  const studentsHtml = students
-    .map((student, index) => {
-      return `
-      <li class="student" data-color="${student.color}">
-        <p class="student-name">
-          ${student.name}
-        </p>
-        <p>Любимый цвет студента: ${student.color}</p>
-        <button data-index="${index}" class="button delete-button">Удалить</button>
-      </li>`;
-    })
-    .join("");
+// // Рендер-функция
+// const renderStudents = () => {
+//   // Преобразование данных в HTML-разметку с помощью map и join
+//   const studentsHtml = students
+//     .map((student, index) => {
+//       return `
+//       <li class="student" data-color="${student.color}">
+//         <p class="student-name">
+//           ${student.name}
+//         </p>
+//         <p>Любимый цвет студента: ${student.color}</p>
+//         <button data-index="${index}" class="button delete-button">Удалить</button>
+//       </li>`;
+//     })
+//     .join("");
 
-  // Рендер HTML-строки в браузер
-  listElement.innerHTML = studentsHtml;
+// // Рендер HTML-строки в браузер
+  // listElement.innerHTML = studentsHtml;
+
+// Реализуем callback для возврата редактируемого списка
+const getListStudentsEdit = (student, index) => {
+  return `
+  <li class="student" data-color="${student.color}">
+    <p class="student-name">
+      ${student.name}
+    </p>
+    <p>Любимый цвет студента: ${student.color}</p>
+    <button data-index="${index}" class="button delete-button">Удалить</button>
+  </li>`;
+}
+
+const renderStudents = (element, getListStudents) => {
+  const studentsHtml = students
+
+    .map((student, index) => getListStudents(student, index)).join("");
+
+  element.innerHTML = studentsHtml;
 
   // Поиск динамически создаваемых элементов разметки
   const deleteButtons = document.querySelectorAll(".delete-button");
@@ -52,12 +71,13 @@ const renderStudents = () => {
       // Удаляем студента из данных
       students.splice(index, 1);
       // Делаем ререндер, чтобы после обновления данных обновить разметку
-      renderStudents();
+      renderStudents(element, getListStudentsEdit);
     });
   }
 };
 
-renderStudents();
+// Передаем в рендер-функцию callback редактируемого списка 
+renderStudents(listElement, getListStudentsEdit);
 
 buttonElement.addEventListener("click", () => {
 
@@ -81,7 +101,7 @@ buttonElement.addEventListener("click", () => {
   });
 
   // Делаем ререндер, чтобы после обновления данных обновить разметку
-  renderStudents();
+  renderStudents(listElement, getListStudentsEdit);
 
   // Очищаем поле ввода имени, записывая в .value элемента пустую строку
   nameInputElement.value = "";
